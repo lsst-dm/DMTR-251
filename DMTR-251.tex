@@ -6,6 +6,7 @@
 
 % Package imports go here.
 \usepackage{booktabs}
+\usepackage{graphicx}
 
 % Local commands go here.
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
@@ -47,8 +48,14 @@ The report for the previous version can be found in \citeds{DMTR-191}.
 % ADD CONTENT HERE
 % You can also use the \input command to include several content files.
 
-\section{Photometric Performance}\label{photometric-performance}
+\section{Dashboard summary of performance metrics}
 
+\begin{figure}
+\includegraphics[width=0.9\columnwidth]{figures/SQuaSH_dashboard_RC2_tract9813.png}
+\caption{}
+\end{figure}
+
+\section{Photometric Performance}\label{photometric-performance}
 
 procCalRep corresponds to requirement OSS-REQ-0275 (defined in
 \citeds{LSE-30}). All other photometric performance
