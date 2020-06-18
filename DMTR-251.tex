@@ -48,19 +48,32 @@ The report for the previous version can be found in \citeds{DMTR-191}.
 % ADD CONTENT HERE
 % You can also use the \input command to include several content files.
 
+The Characterization Metric Report that has accompanied previous releases of the Science Pipelines (through v19.0) has typically contained metrics that were measured using \href{https://github.com/lsst/validation_data_hsc}{validation\_data\_hsc}. This test dataset consists of 8 HSC engineering images: 2 \emph{r}-band, 4 \emph{i}'-band, and 2 \emph{y}-band. For continuity with previous releases, we report metrics from validation\_data\_hsc in this document, but we will use a more substantial dataset for characterization of future releases. For this small dataset, metric measurements were made on individual, separately-processed, single-frame images: jointcal was not run. All values were computed using the \texttt{examples/runHscTest.sh} script in the \href{https://github.com/lsst/validate_drp}{validate\_drp} package.
+
+In this report, we also show metrics measured on the HSC-RC2 dataset. RC2 consists of 3 tracts of data taken from the HSC-SSP survey, and selected to provide a means of testing various ``pathological'' cases (e.g., difficult astrometric solutions, seeing too small to provide a well-sampled PSF, difficult fields for deblending, and large galaxies, among others). These three tracts each contain between 112--149 visits split between the HSC-G, HSC-R, HSC-I, HSC-Z, and HSC-Y (\emph{grizy}) filters. The validate\_drp scripts were run on these tracts to derive a total of 14 photometric, astrometric, and shape metrics, a subset of which are reported here. The RC2 data processing includes jointcal, and thus provides a better representation of the state of the science pipelines than the much simpler validation\_data\_hsc runs.
+
+For comparison, we provide the \SRD required ``design'' value of each metric as defined in the Science Requirements Document \citedsp{LPM-17}, and, where available, the target for this release as defined in the Data Management Development Milestone Roadmap \citedsp{LDM-240}. For context, the \SRD does not place any constraints on \emph{y}-band for these KPMs.  For the photometric metrics, there are only specifications for \emph{g}, \emph{r}, and \emph{i}'. In the case of the ellipticity correlation metrics, there are specs only for \emph{r} and \emph{i}'. The \emph{y}-band measurements are for interest and historical tracking.
+
+Some KPMs (AF1, AD1) involve thresholds that are different for ``design'', ``minimum'', and ``stretch'' specifications. The metrics in this report are all compared to the ``design'' thresholds. The assessment of these KPMs would be different if evaluated against different thresholds.
+
+The per-cycle target numbers come from the ``KPMs'' sheet of \href{http://ls.st/LDM-240}{LDM-240}.
+
 \section{Dashboard summary of performance metrics}
+
+Metrics are typically monitored on a dashboard hosted by SQuaSH (Science Quality System Harness; described in \cietdsp{sqr-009}). Here we show an example of this dashboard displaying $\sim4$ months of measurements for a few metrics. These measurements are for tract 9813, as measured in the \emph{r}-band filter (HSC-R). Note that the large increase between April-June was due to some bugs and issues in the codebase that have since been identified and fixed. The metric values in the most recent processing (with the v20.0 release candidate dubbed v20\_0\_0\_rc1) have returned to similar levels to early 2020.
 
 \begin{figure}
 \includegraphics[width=1.0\columnwidth]{figures/SQuaSH_dashboard_RC2_tract9813.png}
-\caption{SQuaSH dashboard showing the past four months of metric measurements from the RC2 dataset. This view shows the metrics for tract 9813 in the HSC-R filter. The ``regression'' in the metrics from April-June was due to some bugs and configuration changes. After all of these were repaired, the metric values returned to the levels they were at before those bugs.}
+\caption{SQuaSH dashboard showing the past four months of metric measurements from the RC2 dataset. This view shows the metrics for tract 9813 in the HSC-R filter. The ``regression'' in the metrics from April-June was due to some bugs and configuration changes. After all of these were repaired, the metric values as calculated by the v20.0 science pipelines returned to the levels they were at before those bugs.}
 \end{figure}
 
 \section{Photometric Performance}\label{photometric-performance}
 
 procCalRep corresponds to requirement OSS-REQ-0275 (defined in
 \citeds{LSE-30}). All other photometric performance
-metrics follow LSS-REQ-0093 (\citeds{LSE-29}) and
-\citeds{LPM-17} table 14.
+metrics follow LSS-REQ-0093 (\citeds{LSE-29}) and Table 14 of \citeds{LPM-17}.
+
+Any entries left blank are those for which we do not have data in the given filter for that dataset.
 
 \begin{longtable}[]{@{}lllllll@{}}
 \toprule
@@ -193,7 +206,7 @@ PF1: \emph{u}\strut
 \end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
 \(\leq 20\)\strut
 \end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
----\strut
+20.0\strut
 \end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
 ---\strut
 \end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
@@ -208,7 +221,7 @@ PF1: \emph{g}\strut
 \end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
 \(\leq 20\)\strut
 \end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
----\strut
+20.0\strut
 \end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
 ---\strut
 \end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
@@ -253,7 +266,7 @@ PF1: \emph{z}\strut
 \end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
 \(\leq 20\)\strut
 \end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
----\strut
+20.0\strut
 \end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
 ---\strut
 \end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
@@ -372,7 +385,7 @@ PA2: \emph{y}\strut
 \section{Astrometric Performance}\label{astrometric-performance}
 
 The following metrics are defined following LSR-REQ-0094
-\citedsp{LSE-29} and \citeds{LPM-17} table 18.
+\citedsp{LSE-29} and Table 18 of \citeds{LPM-17}.
 
 \begin{longtable}[]{@{}lllllll@{}}
 \toprule
@@ -938,9 +951,8 @@ mas\strut
 
 \section{Ellipticity Correlations}\label{ellipticity-correlations}
 
-
 The following metrics are defined following LSR-REQ-0097
-\citedsp{LSE-29} and \citeds{LPM-17} table 27.
+\citedsp{LSE-29} and Table 27 of \citeds{LPM-17}.
 
 \begin{longtable}[]{@{}lllllll@{}}
 \toprule
