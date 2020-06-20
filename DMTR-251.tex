@@ -949,6 +949,9 @@ mas\strut
 \bottomrule
 \end{longtable}
 
+Almost all of the astrometric metrics are improved with RC2 relative to their values with validation\_data\_hsc. This behavior is expected, because validate\_drp does not include running jointcal, while the RC2 processing does include jointcal. This results in improved astrometry because (1) jointcal simultaneously fits positions of objects in all visits, and (2) RC2 contains more visits, which allows for improvement in the statistical noise of astrometry measurements.
+
+
 \section{Ellipticity Correlations}\label{ellipticity-correlations}
 
 The following metrics are defined following LSR-REQ-0097
